@@ -5,13 +5,24 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Keyboard;
 import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+
+import static java.lang.Thread.sleep;
 
 public class LinkedinLoginTest {
+    WebDriver webDriver;
+
+   @BeforeMethod
+   public void before(){
+
+       webDriver = new FirefoxDriver();
+       webDriver.get("https://www.linkedin.com/");
+
+   }
+
     @Test
     public void successfulLoginTest() {
-        WebDriver webDriver = new FirefoxDriver();
-        webDriver.get("https://www.linkedin.com/");
+
         String actualLoginPageTitle = webDriver.getTitle();
 
 //        Assert.assertEquals("a", "b", "Probably 'a' is not equal to 'b'");
@@ -22,19 +33,19 @@ public class LinkedinLoginTest {
 
 
 
-        WebElement emailField = webDriver.findElement(By. id("login-email"));
-        WebElement passwordField = webDriver.findElement(By. id("login-password"));
-        WebElement signInButton = webDriver.findElement(By. id("login-submit"));
+
+        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage();
+        linkedinLoginPage.login("belovaolga394@gmail.com", "hellga_83_83");
+
+
+
+
+
 
 
         Assert.assertFalse(signInButton.isDisplayed(),
                 "Sign In button is not Displayed");
 
-
-
-        emailField.sendKeys("belovaolga394@gmail.com");
-        passwordField.sendKeys("hellga_83_83");
-        signInButton.click();
 
 
         Assert.assertEquals(webDriver.getCurrentUrl(),
@@ -60,8 +71,7 @@ public class LinkedinLoginTest {
 
     @Test
     public void failedLoginTest() {
-        WebDriver webDriver = new FirefoxDriver();
-        webDriver.get("https://www.linkedin.com/");
+
 
 
         WebElement emailField = webDriver.findElement(By. id("login-email"));
@@ -235,17 +245,70 @@ public class LinkedinLoginTest {
     //16. Password: chars quantity out of limitation range
 
     //17. Email and Password: chars quantity out of limitation range
+    }
+
+
+    //lesson 5
+
+    @Test
+    public void negativeLoginTest() throws InterruptedException {
+
+
+
+        String actualLoginPageTitle = webDriver.getTitle();
+
+//        Assert.assertEquals("a", "b", "Probably 'a' is not equal to 'b'");
+        // Assert.assertEquals(webDriver.getTitle(),
+        Assert.assertEquals(actualLoginPageTitle,
+                "LinkedIn: Войти или зарегистрироваться",
+                "Login page title is wrong");
+
+
+
+        WebElement emailField = webDriver.findElement(By. id("login-email"));
+        WebElement passwordField = webDriver.findElement(By. id("login-password"));
+        WebElement signInButton = webDriver.findElement(By. id("login-submit"));
 
 
 
 
+        Assert.assertFalse(signInButton.isDisplayed(),
+                "Sign In button is not Displayed");
 
+
+
+        emailField.sendKeys("belovaolga394@gmail.com");
+        passwordField.sendKeys("1");
+        signInButton.click();
+
+        sleep (3000);
+
+        String currentPageUrl = webDriver.getCurrentUrl();
+        String currentPageTitle = webDriver.getTitle();
+
+        Assert.assertEquals (currentPageUrl, "Sign In to LinkedIn",/*make sure assert falls either it is passed anyway*/
+                "login-submit URL is wrong");
+
+        WebElement errorMessage = webDriver.findElement(By.xpath("//div[@role='alert']"));
+
+        Assert.assertNotEquals(errorMessage.getText(),
+                "There were one or more errors in your submission. Please correct the marked fields below.",
+                "Wrong error message text displayed");/*notequals - falls*/
+
+}
+
+
+    @AfterMethod
+    public void after() {
+        webDriver.close();
     }
 
 
 
-
-
-
-
 }
+
+
+/*
+@beforeClass - open-close Browser 1nce
+@beforeMethod - each time for each test
+*/
