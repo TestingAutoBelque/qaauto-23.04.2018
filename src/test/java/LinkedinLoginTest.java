@@ -311,4 +311,5 @@ public class LinkedinLoginTest {
 /*
 @beforeClass - open-close Browser 1nce
 @beforeMethod - each time for each test
+@beforeTest
 */
