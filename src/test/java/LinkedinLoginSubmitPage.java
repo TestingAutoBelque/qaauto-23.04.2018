@@ -28,7 +28,4 @@ public class LinkedinLoginSubmitPage extends LinkedinBasePage {
         return emailField.isDisplayed();
     }
 
-
-
-
 }

@@ -26,13 +26,18 @@ public class LinkedinLoginPage extends LinkedinBasePage {
     public void login(String email, String password) {
         emailField.sendKeys(email);
         passwordField.sendKeys(password);
-        signInButton.click();
+
     }
+
+    public void clickSignIn(){signInButton.click();}
+
+    public boolean isSignInButtonActive(){return signInButton.isEnabled();}
 
     public boolean isSignInButtonDisplayed() {
         return signInButton.isDisplayed();
     }
 
-
-
+    public boolean isLoginPageLoaded(){
+        return emailField.isDisplayed();
+    }
 }
