@@ -22,7 +22,7 @@ public class LinkedinLoginTest {
     public Object[][] ValidDataProvider() {
         return new Object[][]{
                 {"belovaolga394@gmail.com", "hellga_83_83" },
-                {"BELOVAOLGA394@GMAIL.COM", "hellga_83_83" }
+               // {"BELOVAOLGA394@GMAIL.COM", "hellga_83_83" }
         };
     }
 
@@ -40,10 +40,7 @@ public class LinkedinLoginTest {
                 "Sign In button is not Displayed");
 
 
-        linkedinLoginPage.login(email, password);
-        linkedinLoginPage.clickSignIn();
-        LinkedinHomePage linkedinHomePage = new LinkedinHomePage(webDriver);
-
+        LinkedinHomePage linkedinHomePage = linkedinLoginPage.login(email, password);
 
         sleep(3000);
 
@@ -76,7 +73,6 @@ public class LinkedinLoginTest {
         sleep (3000);
 
         linkedinLoginPage.login(email, password);
-        linkedinLoginPage.clickSignIn();
         LinkedinLoginSubmitPage linkedinLoginSubmitPage = new LinkedinLoginSubmitPage(webDriver);
 
         sleep (3000);
@@ -98,15 +94,14 @@ public class LinkedinLoginTest {
         };
     }
     @Test(dataProvider="cornerinValidDataProvider")
-    public void negativeReturnedToLoginSubmitCornerMinTest(String email, String password) throws InterruptedException {
+    public void negativeReturnedToLoginSubmitCornerTest(String email, String password) throws InterruptedException {
 
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
         Assert.assertTrue(linkedinLoginPage.isSignInButtonDisplayed(),
                 "Sign In button is not Displayed");
 
-        sleep (3000);
+        sleep (30000);
         linkedinLoginPage.login(email, password);
-        linkedinLoginPage.clickSignIn();
 
         LinkedinLoginSubmitPage linkedinLoginSubmitPage = new LinkedinLoginSubmitPage(webDriver);
 
@@ -141,12 +136,8 @@ public class LinkedinLoginTest {
         linkedinLoginPage.login(email, password);
 
 
-        Assert.assertFalse(linkedinLoginPage.isSignInButtonActive(),
-                "Sign In button is not available");
-
-
-        Assert.assertTrue(linkedinLoginPage.isLoginPageLoaded(),
-                "Login page is not loaded.");
+        //Assert.assertTrue(linkedinLoginPage.is(),
+          //      "Login page is not loaded.");
 
     }
 
