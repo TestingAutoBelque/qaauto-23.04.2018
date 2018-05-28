@@ -29,6 +29,27 @@ public class LinkedinLoginPage extends LinkedinBasePage {
     }
 
 
+
+
+    public LinkedinLoginSubmitPage failedLogin(String email, String password) {
+        emailField.sendKeys(email);
+        passwordField.sendKeys(password);
+        signInButton.click();
+        return PageFactory.initElements(webDriver, LinkedinLoginSubmitPage.class);
+    }
+
+
+
+    public LinkedinInitialPage emptyLogin(String email, String password) {
+        emailField.sendKeys(email);
+        passwordField.sendKeys(password);
+        signInButton.click();
+        return PageFactory.initElements(webDriver, LinkedinInitialPage.class);
+    }
+
+
+
+
    public boolean isSignInButtonDisplayed() {
 
         return signInButton.isDisplayed();
